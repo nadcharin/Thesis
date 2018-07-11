@@ -1,4 +1,7 @@
-This repository comprises the results of my thesis project: _Outlier detection in multivariate time series: exploiting reconstructions from random projections_.
+This repository comprises the results of my thesis project: 
+
+_Outlier detection in multivariate time series: exploiting reconstructions from random projections._
+
 This work has been produced under supervision of David Tax, at the Pattern Recognition Laboratory of Delft University of Technology.
 
 The contents of this repository are as follows:
