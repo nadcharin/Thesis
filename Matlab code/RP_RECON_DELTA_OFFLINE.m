@@ -1,34 +1,27 @@
 function Ofinal = RP_RECON_DELTA_OFFLINE(X, m)
-%RP_RECON This code implements the deltaRP for the specific 
-% purpose of reconstruction-based outlier detection.
+%RP_RECON This code implements the deltaRP for the specific purpose of reconstruction-based outlier detection.
 %
 % Ofinal = RP_RECON_DELTA_OFFLINE(X, m)
 %
 % INPUT
-%   X       n x d matrix of length n and size d, where n refers to the 
-%           number of observed timesteps and d the number of time series.
+%   X       n x d matrix of length n and size d, where n refers to the number of observed timesteps and d the number of time series.
 %   m       number of predictors for each data point.
 %
 % OUTPUT
 %   O       n x 1 vector of outlier scores. 
 %
 % DESCRIPTION
-% This code implements the deltaRP method to find outliers in 
-% multivariate time series from running the RP method twice, with k=1 and
-% k=2. The outlier scores corresponds to the difference between the two
-% obtained outlier scores from RP(k=1) and RP(k=2).
+% This code implements the deltaRP method to find outliers in multivariate time series from running the RP method twice, with k=1 and
+% k=2. The outlier scores corresponds to the difference between the two obtained outlier scores from RP(k=1) and RP(k=2).
 %
 %  Copyright: Madelon Hulsebos, m.hulsebos-1@student.tudelft.nl
-%  Intelligent Systems Department, Pattern Recognition & Bioinformatics
-%  Research Group.
-%  Faculty of Electrical Engineering, Mathematics and Computer Science,         
-%  Delft University of Technology,            
-%  The Netherlands.
+%  Intelligent Systems Department, Pattern Recognition & Bioinformatics Research Group.
+%  Faculty of Electrical Engineering, Mathematics and Computer Science, Delft University of Technology, The Netherlands.
     
     % Number of data points n, number of time series d
     [n, d] = size(X);
 
-%   Generation of k approximate orthonormal random vectors
+    % Generation of k approximate orthonormal random vectors
     for i = 1 : m
         R1(:,:,i) = randn(d,1);
         R2(:,:,i) = randn(d,2);
