@@ -1,29 +1,22 @@
 function Ofinal = RP_RECON_DELTA(X, m)
-%RP_RECON_DELTA This code implements the deltaRP method for the 
-% specific purpose of reconstruction-based outlier detection.
+%RP_RECON_DELTA This code implements the deltaRP method for the specific purpose of reconstruction-based outlier detection.
 %
 % Ofinal = RP_RECON_DELTA(X, m)
 %
 % INPUT
-%   X       n x d matrix of length n and size d, where n refers to the 
-%           number of observed timesteps and d the number of time series.
+%   X       n x d matrix of length n and size d, where n refers to the number of observed timesteps and d the number of time series.
 %   m       number of RP_RECON predictors for each data point.
 %
 % OUTPUT
 %   Ofinal  n x 1 vector of outlier scores. 
 %
 % DESCRIPTION
-% This code implements the deltaRP method to find outliers in 
-% multivariate time series from running the RP method twice, with k=1 and
-% k=2. The outlier scores corresponds to the difference between the two
-% obtained outlier scores from RP(k=1) and RP(k=2).
+% This code implements the deltaRP method to find outliers in multivariate time series from running the RP method twice, with k=1 and
+% k=2. The outlier scores corresponds to the difference between the two obtained outlier scores from RP(k=1) and RP(k=2).
 %
-%  Copyright: Madelon Hulsebos, m.hulsebos-1@student.tudelft.nl
-%  Intelligent Systems Department, Pattern Recognition & Bioinformatics
-%  Research Group.
-%  Faculty of Electrical Engineering, Mathematics and Computer Science,         
-%  Delft University of Technology,            
-%  The Netherlands.
+% Copyright: Madelon Hulsebos, m.hulsebos-1@student.tudelft.nl
+%  Intelligent Systems Department, Pattern Recognition & Bioinformatics Research Group.
+%  Faculty of Electrical Engineering, Mathematics and Computer Science, Delft University of Technology, The Netherlands.
     
     % Number of data points n, number of time series d
     [n, d] = size(X);
@@ -36,8 +29,8 @@ function Ofinal = RP_RECON_DELTA(X, m)
     O_m = zeros(1,m);
     O_S = zeros(1,m);
     
-%   Generation of k approximate orthonormal random vectors
-     for i = 1 : m
+    %   Generation of k approximate orthonormal random vectors
+    for i = 1 : m
         R1(:,:,i) = randn(d,1);
         R2(:,:,i) = randn(d,2);
     end
@@ -57,8 +50,7 @@ function Ofinal = RP_RECON_DELTA(X, m)
             % Reconstruct the vector to original dimensionality
             x_recon1 = (W1(:,:,j) * x_proj1); 
             x_recon2 = (W2(:,:,j) * x_proj2);
-            % Compute the residual between original and reconstructed data
-            % point
+            % Compute the residual between original and reconstructed data point
             x_residual1 = abs(x_i - x_recon1);
             x_residual2 = abs(x_i - x_recon2);
 
