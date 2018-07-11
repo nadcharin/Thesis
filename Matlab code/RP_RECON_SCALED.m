@@ -1,36 +1,25 @@
 function [O, x_recon, x_proj] = RP_RECON_SCALED(X, k)
-%RP_RECON_SCALED This code implements the random projection method for the 
-% specific purpose of reconstruction-based outlier detection.
+%RP_RECON_SCALED This code implements the random projection method for the specific purpose of reconstruction-based outlier detection.
 %
 % [O, x_recon, x_proj] = RP_RECON_SCALED(X, k)
 %
 % INPUT
-%   X       n x d matrix of length n and size d, where n refers to the 
-%           number of observed timesteps and d the number of time series.
-%   k       compression dimensionality, i.e. d time series are projected 
-%           onto a k-dimensional base.
+%   X       n x d matrix of length n and size d, where n refers to the number of observed timesteps and d the number of time series.
+%   k       compression dimensionality, i.e. d time series are projected onto a k-dimensional base.
 %
 % OUTPUT
 %   O       n x 1 vector of outlier scores. 
-%   x_recon n x d matrix representing the model obtained by reconstruction
-%           from the projection of all x in X. Note, x_recon is the
-%           *scaled* reconstruction.
-%   x_proj  n x k matrix representing the lower-dimensional representation
-%           of X.
+%   x_recon n x d matrix representing the model obtained by reconstruction from the projection of all x in X. 
+%           Note, x_recon is the *scaled* reconstruction.
+%   x_proj  n x k matrix representing the lower-dimensional representation of X.
 %
 % DESCRIPTION
-% This code implements the random projection method to find outliers in 
-% multivariate time series from reconstruction errors as retrieved by
-% projecting the data onto k approximately orthonormal projection vectors.
+% This code implements the random projection method to find outliers in multivariate time series from reconstruction 
+% errors as retrieved by projecting the data onto k approximately orthonormal projection vectors.
 %
-%
-%  Copyright: Madelon Hulsebos, m.hulsebos-1@student.tudelft.nl
-%  Intelligent Systems Department, Pattern Recognition & Bioinformatics
-%  Research Group.
-%  Faculty of Electrical Engineering, Mathematics and Computer Science,         
-%  Delft University of Technology,            
-%  The Netherlands.
-%
+%  Copyright: Madelon Hulsebos, madelon.hulsebos@gmail.com
+%  Intelligent Systems Department, Pattern Recognition & Bioinformatics Research Group.
+%  Faculty of Electrical Engineering, Mathematics and Computer Science, Delft University of Technology, The Netherlands.
 
 
     % Number of data points n, number of time series d
