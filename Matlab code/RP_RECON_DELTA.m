@@ -42,6 +42,7 @@ function Ofinal = RP_RECON_DELTA(X, m)
         % The measurement vector at timestep t
         x_i = X(i,:)';
         
+        % Generate m predictions
         for j = 1 : m
 
             % Project current measurement vector onto random base
@@ -57,7 +58,7 @@ function Ofinal = RP_RECON_DELTA(X, m)
             O_sub1 = norm(x_residual1)^2;
             O_sub2 = norm(x_residual2)^2;
             
-
+            % Online standardization of the m predictions
             if i == 1
                 m1_prev(j) = m1(j);
                 m2_prev(j) = m2(j);                 
@@ -66,22 +67,27 @@ function Ofinal = RP_RECON_DELTA(X, m)
                 
                 O_sub(i,j) = 0;
              else
-                 
+                % Online mean estimation of O_(k=1,j) and O_(k=2,j)
                 m1(j) = m1(j) +  (O_sub1 - m1(j)) / i;
                 m2(j) = m2(j) +  (O_sub2 - m2(j)) / i;
+                
                 S1(j) = S1(j) +  (O_sub1 - m1(j)) * (O_sub1 - m1_prev(j));
                 S2(j) = S2(j) +  (O_sub2 - m2(j)) * (O_sub2 - m2_prev(j));
+                
+                % Online standard deviation estimation of O_(k=1,j) and O_(k=2,j)
                 Std1 = sqrt(S1(j)/i);
                 Std2 = sqrt(S2(j)/i);
                 
                 m1_prev(j) = m1(j);
                 m2_prev(j) = m2(j);
-
+                
+                % Absolute difference between standardized O(k=1) and O(k=2)
                 O_sub(i,j) = abs(((O_sub1 - m1(j)) / Std1) - ((O_sub2 - m2(j)) / Std2));
              end
             
         end
         
+        % Standardization of the m absolute differences 
         if i == 1
             
             O_mprev = O_m;
