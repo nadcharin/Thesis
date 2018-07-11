@@ -1,0 +1,89 @@
+\chapter{Conclusion}
+\label{chap:discussion}
+
+In this chapter we recapitulate what has been discussed in this thesis by means of a summary in section \ref{sec:discussion_summary}. What we conclude from this thesis with respect to the initial research question is discussed in section \ref{sec:discussion_conclusions}. Finally, we provide future research directions in section \ref{sec:discussion_future} by identifying limitations of the proposed methods and conducted research, and highlighting the remaining open questions.
+
+\section{Summary}
+\label{sec:discussion_summary}
+
+In this thesis we considered the task of unsupervised online outlier detection in multivariate time series. The difficulties imposed by this task as introduced in chapter \ref{chap:introduction} can be summarized as follows.
+
+\begin{itemize}
+	\itemsep-0.2em
+	\item The algorithm should be minimally sensitive to its parameters, require limited prior information, and label each data point before the next point is received.	
+	\item The analyst should have an idea of the structure of the data and expected outliers.
+	\item The algorithm should be able to detect global as well as contextual outliers in time series.
+	\item The algorithm has to scale well to high-dimensional data sets, with respect to its computational complexity and its detection performance despite the curse of dimensionality.
+\end{itemize} 
+
+These challenges motivated us to concentrate our research around the question: \textit{can we leverage random projections in an online and unsupervised reconstruction-based method in order to find outliers in multivariate time series effectively though more efficiently, and if so, to what extent?} To that end, in chapter \ref{chap:reconstruction-detection} we first explained the theory behind reconstruction-based methods. We also discussed a well-known online method called SPIRIT which is based on approximate principal component analysis. This method has been adopted as a baseline method for comparison purposes. 
+
+We continued with an explanation of the proposed random projection method (RP), and finally presented its entire procedure by means of algorithm \ref{alg:analysis_algorithm} in chapter \ref{chap:rp-method}. Its procedure basically revolves around a projection of the time series into a lower-dimensional random subspace, from which the reconstruction is used as model of the data. Hopefully, an outlier is then poorly reconstructed such that the squared Euclidean distance between the original data point and its reconstruction results in a higher outlier score than for normal data points.
+Throughout the analysis with the RP method in chapter \ref{chap:analysis}, we found that it finds global point outliers very accurately and efficiently. And as opposed to SPIRIT, it is relatively insensitive to its parameters. However, we also showed that it is not successful in finding contextual outliers, which is certainly an undesired conclusion.
+
+Fortunately, we discovered that the RP method often works better when it projects the data into a $1$-dimensional subspace instead of a ($1+\Delta$)-dimensional subspace with $\Delta > 0$. This implies that a reconstruction from a $1$D projection, on average, results in a more discriminative outlier measure than a reconstruction from a $2$D projection. This resulted in formulating hypothesis \ref{hyp:analysis_outlierinlier} which directly led us to a different interpretation of the outlier scores of the RP method. This alternative interpretation resulted in a method we call $\Delta$RP which basically runs the RP method twice: once with $1$ projection vector and once with $2$ vectors. The standardized difference between the two resulting outlier scores is then interpreted as the final outlier score. This outlier measure appeared to be more effective for finding outliers in general, though increases the computational burden compared to the default RP method as more than $1$ predictions for the outlier score are needed to obtain a reliable outlier score.
+
+The experiments with real-world data in chapter \ref{chap:experiments} showed that for realistic data structures, $\Delta$RP is significantly faster than its baseline SPIRIT without the loss of detection performance. It was also shown that the RP method yields, on average, a good detection performance and is evidently the fastest method. Yet it comes with the cost of misclassifying a larger fraction of contextual outliers compared to $\Delta$RP.
+The latter appears to be relatively insensitive to the number of predictors $m$, which basically proportionally improves the certainty and accuracy of the predictions. SPIRIT needed some exploration of its parameter settings beforehand to find a proper operating point as its performance is highly sensitive to the parameters.
+Finally, we assessed the RP-based methods on non-temporal data for which the proposed methods appeared to be successfully applicable too.
+
+
+\section{Conclusions}
+\label{sec:discussion_conclusions}
+
+In chapter \ref{chap:introduction} we identified the primary challenges imposed by our problem context which we translated to a set of evaluation criteria in section \ref{sec:analysis_methodology}. In table \ref{tab:conclusion_qualcomp} we combine the observations from the analysis and experiments into a final evaluation of the proposed methods in comparison with SPIRIT. For each criterion we determined which method is evaluated best and assigned a `$+$' (plus) to that method. We assigned a `$-$' (minus) to the methods that perform worse on the given criterion. 
+
+\begin{table}[h]
+	\centering
+	\vspace{0.05cm}
+	\caption{Final evaluation of the proposed methods against the baseline.}
+	\label{tab:conclusion_qualcomp}
+	\begin{tabular}{l c c c}
+		\toprule
+		\textbf{Evaluation criterion} 		& \textbf{RP} 	& \textbf{$\Delta$RP} & \textbf{SPIRIT} \\ \midrule
+		Time needed to process data points 	&  		$+$		&  		$-$		& $-$ \\[0.12cm]
+		Dependence on history of stream 	& 		$+$		& 		$+$		& $-$ \\[0.12cm]
+		Amount of prior information needed 	& 		$+$		& 		$-$		& $-$ \\[0.12cm]
+		Sensitivity of detection performance to parameters			&	$+$ 	& 	$-$	& $-$ \\
+		\midrule
+		Generalizability of performances to different data sets & $-$ & $+$ & $-$\\[0.12cm]
+		Generalizability of performances to different outlier types	& $-$	& $+$	& $-$\\
+		\midrule
+		Influence of $d$ and $n$ on detection performance		& $+$ & $+$ & $+$ \\[0.12cm]
+		Influence of $d$ on runtime performance		& $+$ & $+$ & $-$ \\
+		\bottomrule		
+	\end{tabular}
+	\vspace{0.05cm}
+\end{table}
+
+Considering the runtime performance of the methods analysed in this thesis, the RP method as formulated in algorithm \ref{alg:analysis_algorithm} was evidently the most efficient. Aside from that, it does not generalize well to all types of outliers and data sets. $\Delta$RP would therefore be a safe second choice when it comes to runtime and detection performance. 
+
+When it comes to the dependency on the history of a data stream, none of the RP-based methods exploit correlations between data points over time. Both methods solely rely on the correlation among the different time series. SPIRIT does track temporal relations which is incorporated internally by a so-called forgetting factor. Still, SPIRIT benefits from a sliding window as its detection performance becomes less sensitive to its initial parameters. Altogether, the RP-based methods are considered preferable with respect to their (in)dependence of the history of a data stream.
+
+Throughout the analysis and experiments it became clear that the RP method performs best if we deploy it with only $1$ projection vector. Therefore, the RP method could be regarded as a parameter-free method, requiring no prior information to set its only parameter: the number of projection vectors $k$. It also turned out to be the least sensitive to this parameter, explaining its positive evaluation with respect to the sensitivity of the detection performance. 
+
+The analysis and experiments pointed out that $\Delta$RP generalizes very well to all different data sets we used. This is a very desirable property making this method suitable for a broad range of applications. $\Delta$RP is also the best choice when it comes to finding all outliers of the considered types: global point outliers, contextual point outliers and contextual collective outliers. That said, $\Delta$RP is considered the most generally applicable method with respect to the structure of the data, and the outlier types that can possibly be found.
+
+The final two criteria relate to the influence of the dimensionality of the data stream. First, we should be able to find significantly outlying data points in a very large set of $n$ data points. Second, this should also be possible for an increasing dimensionality $d$ of each data point. Though methods might not be able to do so, we found that reconstruction-based methods in general do not suffer from this problem. At least, we did not find sufficient evidence of a correlation between the dimensionality of the data and the detection performance of a method. This observation corresponds to the statement of Zimek et al. \cite{zimek2012survey} that in particular outlier detection methods computing outlier scores based on Euclidean distances not necessarily suffer from the curse of dimensionality. Still, the number of time series does influence the runtime of SPIRIT more than RP-based methods, in a negative sense. This is caused by the potentially increasing number of principal components $k$ needed to estimate when the number of time series is high, where the runtime of SPIRIT depends quadratically on $k$.
+ 
+Returning to our research question: we presented two effective and efficient methods that exploit the reconstruction error from random projections to derive outlier scores in an online and unsupervised manner. Besides, both RP-based methods are relatively insensitive to the parameters as opposed to most online outlier detection methods. Yet the most efficient method (RP) is not generally applicable as it lacks the ability to find contextual outliers, which is considered very important for outlier detection methods. The method proposed to resolve this problem ($\Delta$RP) is less efficient but generalizes well to different outlier types and data sets. Still, $\Delta$RP is in most cases more efficient than SPIRIT. If we make up the balance given the identified challenges, $\Delta$RP would be the overall best choice.
+
+
+\section{Future work}
+\label{sec:discussion_future}
+
+From this thesis we already got a fair impression of the potential of the proposed methods. Still, we are left with some open questions interesting to answer in the future. Starting with the limitations of this research we think it would be interesting to experimentally assess the applicability of the methods on more differently structured (temporal) data sets with varying outlier densities. Additionally, we did not find enough evidence of a correlation between the detection performances and the number of time series $d$ or data points $n$, which seems valuable to study further. 
+
+Furthermore, we did not explore the influence of the strength of the correlations between the time series, yet this correlation is an important condition for the RP-based methods to work well. Finally, we focused on comparing our methods to an established method which functioned as a baseline. Evaluating the performance of the methods against more recently introduced methods (e.g. Loda \cite{pevny2016loda} as discussed in section \ref{sec:introduction_related}) would be valuable.
+
+We also identified some limitations of the proposed methods RP and $\Delta$RP, which are interesting to look at in the future. Throughout the analysis, we concluded that both methods do not significantly benefit from a window, nor track any temporal relations internally. Especially the default RP method could benefit from doing so, as in its current formulation it does not detect the contextual outliers well. 
+
+The method we propose to find contextual outliers better, $\Delta$RP, relies on the assumption that outliers are reconstructed relatively better compared to normal data points when the number of projection vectors is increased. However, the random factor associated with the data projections introduces a significant uncertainty of the detection performance, which can be compensated by increasing the number of predictors $m$. For future research, it would be valuable to explore heuristics that would result in an accurate a priori setting for $m$. This would make it easier to settle on the desired balance between the detection and runtime performances before $\Delta$RP is deployed.
+
+Nevertheless, the most pressing question that is left unanswered is whether hypothesis \ref{hyp:analysis_outlierinlier} can be proven formally. If so, it opens a few additional questions we would be interested in:
+\begin{itemize}
+	\item What is the probability associated with this hypothesis such that it holds on expectation?
+	\item What technicality stands at the basis of this probability, i.e. what property of the data or the random projection matrices makes it stand or fall?
+\end{itemize}
+
+In general, we encourage theoretical analysis to prove hypothesis \ref{hyp:analysis_outlierinlier}. Finally we only explored the RP-based methods with Gaussian dense random matrices. Though, a significant body of research has been devoted to advancing the random projection matrices with respect to the runtime performance. It might be interesting to discover the effects of the different variants out there, as in this thesis we only explored the tip of the iceberg.

@@ -1,0 +1,56 @@
+\chapter*{Notation}
+\addcontentsline{toc}{chapter}{Notation}
+\label{chap:notation}
+
+\begin{table}[h]
+	\centering
+\begin{tabular}{l l}
+			${\mathbf x}$						&		Data point\\
+			${\mathbf X}$						&		Matrix of data points\\
+			$i$									&		Time index\\						
+			${\mathbf x_i}$						&		$i^\text{th}$ data point\\
+			$j$									&		Feature index\\
+			$\mathbf{x}_j$						&		$j^{\text{th}}$ feature, often $j^{\text{th}}$ time series\\
+			${\mathbf x}_{i,j}$					&		$j^\text{th}$ feature value of ${\mathbf x_i}$\\
+			
+			$n$									&		Number of data points\\
+			$d$									&		Number of features, time series\\
+			$d \times n$						&		Dimensionality of matrix with $d$ rows (time series) and $n$ columns (data points)\\
+			$\mathbb{R}^d$						&		Real-valued $d$-dimensional object\\
+			
+	$\mathbf{f} : \mathbb{R}^d \to \mathbb{R}^k$&		Function $\mathbf{f}$ mapping object from $\mathbb{R}^d$ to $\mathbb{R}^k$\\
+			${\mathbf f}({\mathbf x})$			&		Output of $\mathbf{f}$ given ${\mathbf x}$\\
+			${\mathbf w}$						&		Projection vector\\
+			${\mathbf W}$						&		Projection matrix\\
+			${\mathbf W}^T$						&		Transpose of $\mathbf{W}$\\		
+			${\mathbf W}^{-1}$					&		Inverse of $\mathbf{W}$\\
+			${\mathbf I}$						&		Identity matrix\\	
+			${\mathbf R}$						&		Random projection matrix\\	
+			$r$									&		Entry of $\mathbf{R}$\\
+			${\mathbf x}'$						&		Projection of ${\mathbf x}$\\
+			$\hat{{\mathbf x}}$					&		Reconstruction of ${\mathbf x}'$\\
+			$\mathcal{E}$						&		Reconstruction error\\
+						
+			$k$									&		Number of projection vectors, projection dimensionality\\
+			$p$									& 		Length of sliding window\\
+			$\lambda$							&		Forgetting factor, parameter used by the baseline\\		
+			$m$									&		Number of predictors, parameter used by the proposed method\\			
+			$\|{\mathbf x}\|$					&		Euclidean norm of ${\mathbf x}$\\
+			$\|{\mathbf x} - {\mathbf y}\|^2$	&		Squared Euclidean distance between data points ${\mathbf x}$ and ${\mathbf y}$\\
+			$\varepsilon$						&		Distorted Euclidean distance\\
+			$O$									&		Outlier score\\		
+			$\theta$							&		Threshold on outlier scores\\	
+			$\mu$								&		Mean of a vector\\					
+			$\sigma$							&		Standard deviation\\
+			
+			$\mathcal{N}$						&		Reference to the Normal probability distribution\\
+			$\mathcal{U}$						&		Reference to the Uniform probability distribution\\
+			$\sin$								&		Sine function\\
+			$\cos$								&		Cosine function\\
+			$A$									&		Amplitude of sinusoidal function\\
+			$C$									&		Offset of sinusoidal function\\
+			$\varphi$							&		Phase of sinusoidal function\\
+			$N_i$								&		Noise term\\			
+
+\end{tabular}
+\end{table}

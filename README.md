@@ -1,9 +1,13 @@
-This repository will soon be stuffed with documents relating to my thesis, in the form of:
+This repository comprises the results of my thesis project.
+This work has been produced under supervision of David Tax, at the Pattern Recognition Laboratory of Delft University of Technology.
 
-- Literature sources;
-- Thesis document;
-- Conference paper;
-- Code used to generate the results as presented in the thesis;
-- A detailed readme describing how to use the code provided to reproduce the results.
+The contents of this repository are as follows:
+- The data used for the analysis of the two proposed Random Projection methods, and real-world experiments. The setup of the analysis and experiments are explained in the thesis.
+- The code that has been used to generate the results as contained in the thesis in the form of four functions:
+	- RP_RECON: the original default RP method.
+	- RP_RECON_SCALED: the default RP method with back-scaling.
+	- RP_RECON_DELTA: the deltaRP method.
+	- RP_RECON_DELTA_OFFLINE: the offline version of the deltaRP method.
+- The thesis document and files used to generate it.
 
-I officially started my thesis on 27 November 2017 and expect to defend my work on 15 July 2018.
+I officially started my thesis around 20 November 2017 and will defend my work on 20 July 2018 at 9:30 AM.

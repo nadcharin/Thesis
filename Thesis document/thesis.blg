@@ -1,0 +1,15 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: thesis.aux
+The style file: tudelft-report.bst
+A level-1 auxiliary file: acks.aux
+Database file #1: report-bib.bib
+Warning--I'm ignoring japkowicz1995novelty's extra "title" field
+--line 120 of file report-bib.bib
+Warning--to sort, need author or key in scikit2018random
+Warning--to sort, need author or key in yahoo2015s5
+Warning--to sort, need author or key in uci2018data
+Warning--empty year in scikit2018random
+Warning--empty year in uci2018data
+Warning--empty year in yahoo2015s5
+Warning--can't use both volume and number fields in breunig2000lof
+Warning--empty booktitle in japkowicz1995novelty
+(There were 9 warnings)
